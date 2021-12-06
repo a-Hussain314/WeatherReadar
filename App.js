@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CitiesListScreen from './src/screens/CitiesListScreen';
@@ -14,7 +13,7 @@ const App = () => {
 
       <Stack.Navigator initialRouteName="CitiesListScreen" screenOptions={{
         title: null,
-        headerStyle: { backgroundColor: colors.blue, borderWidth: 5 },
+        headerStyle: { backgroundColor: colors.blue },
         headerTintColor: colors.light,
         headerShadowVisible: false
       }}>

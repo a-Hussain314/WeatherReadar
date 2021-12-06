@@ -37,13 +37,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "stretch",
-        // borderWidth: 1
-
     },
     button: {
         paddingVertical: 20,
         paddingHorizontal: 24,
-        // borderWidth: 1
     },
     cityDataButton: {
         flex: 1,

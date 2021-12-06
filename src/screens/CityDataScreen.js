@@ -33,11 +33,8 @@ const CityDataScreen = ({ route }) => {
     <Layout>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={styles.dataBox}>
         <Text style={styles.title}>{cityNameWithCountryIso}</Text>
-
         {isLoading && <ActivityIndicator style={styles.spinner} size="large" color={colors.blue} />}
-
         {cityData && <Image resizeMode={"contain"} source={{ uri: `https://openweathermap.org/img/w/${cityData.weather[0]?.icon}.png` }} style={styles.icon} />}
-
         {cityData &&
           <>
             <View style={styles.dataItem}>
@@ -57,9 +54,7 @@ const CityDataScreen = ({ route }) => {
               {cityData.wind?.speed && <Text style={styles.dataItemInfo}>{cityData.wind.speed} Km/h</Text>}
             </View>
           </>
-
         }
-
       </ScrollView>
     </Layout>
   )
@@ -83,7 +78,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.58,
     shadowRadius: 16.00,
     elevation: 24,
-    // borderWidth: 1,
   },
   title: {
     fontSize: font.sizes.xlarge,
@@ -98,7 +92,6 @@ const styles = StyleSheet.create({
     marginVertical: 50,
   },
   dataItem: {
-    // borderWidth: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

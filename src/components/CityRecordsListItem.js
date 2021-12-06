@@ -11,7 +11,11 @@ const CityRecordsListItem = ({ city }) => {
             <Image resizeMode={"stretch"} source={{ uri: `https://openweathermap.org/img/w/${city.weather[0]?.icon}.png` }} style={styles.recordIcon} />
             <View style={styles.recordInfo}>
                 <Text style={styles.recordTime}>{`${city.recordDatetime.date} - ${city.recordDatetime.time}`}</Text>
-                <Text style={styles.recordWeather}>{city?.weather[0]?.description}, {(city.main?.temp - 273.15).toFixed(1)}° C</Text>
+                <Text style={styles.recordWeather}>
+                    {city?.weather[0]?.description && <Text >{city.weather[0].description}</Text>}
+                    {city?.weather[0]?.description && city?.main?.temp && <Text >, </Text>}
+                    {city?.main?.temp && <Text >{(city.main.temp - 273.15).toFixed(1)}° C</Text>}
+                </Text>
             </View>
         </View>
     )
@@ -27,7 +31,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        // borderWidth: 1
     },
     recordIcon: {
         width: 50,

@@ -30,26 +30,26 @@ export const addCity = async (cityName = "", callback = () => { }) => {
         }
 
     } catch (e) {
-        console.error("add city error : ", e)
-    }
-}
-
-export const removeCity = async (cityName = "", callback = () => { }) => {
-    try {
-        const citeis = await AsyncStorage.getItem("cities");
-
-        if (citeis) {
-            const parsedCities = JSON.parse(citeis);
-            if (parsedCities[cityName]) {
-                delete parsedCities[cityName];
-                await AsyncStorage.setItem("cities", JSON.stringify(parsedCities));
-                callback(parsedCities)
-            }
-        }
-    } catch (e) {
         // 
     }
 }
+
+// export const removeCity = async (cityName = "", callback = () => { }) => {
+//     try {
+//         const citeis = await AsyncStorage.getItem("cities");
+
+//         if (citeis) {
+//             const parsedCities = JSON.parse(citeis);
+//             if (parsedCities[cityName]) {
+//                 delete parsedCities[cityName];
+//                 await AsyncStorage.setItem("cities", JSON.stringify(parsedCities));
+//                 callback(parsedCities)
+//             }
+//         }
+//     } catch (e) {
+//         // 
+//     }
+// }
 
 export const addRecordToCity = async (cityName = "", record = {}) => {
     try {
@@ -57,7 +57,8 @@ export const addRecordToCity = async (cityName = "", record = {}) => {
         if (citeis) {
             const parsedCities = JSON.parse(citeis);
             if (parsedCities[cityName]) {
-                parsedCities[cityName] = [...parsedCities[cityName], record];
+                // add the new record at the top of the list
+                parsedCities[cityName] = [record, ...parsedCities[cityName]];
                 await AsyncStorage.setItem("cities", JSON.stringify(parsedCities));
             }
         }

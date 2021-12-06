@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, FlatList, ActivityIndicator } from "react-native"
 import CitySearchListItem from './CitySearchListItem';
 import { getWeatherDataFromApi } from "../utils/requester";
@@ -9,20 +9,30 @@ const SearchModal = ({ setModalVisible, setCites }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
-    const textInputRef = useRef();
     const DebounceTimeoutId = useRef(null);
 
-    // to listen to search text cahnges and search for city once user stop writing (debouncing).
+    // to listen to search text input cahnges then,
+    // search for city once user stop writing (debouncing).
     useEffect(() => {
         if (DebounceTimeoutId) {
-            clearTimeout(DebounceTimeoutId.current);
-            if (searchTerm) {
-                // once use start typing : clear the list & show the spinner 
-                setSearchResults([]);
-                setIsLoading(true);
 
+            // clear the old timeOut function, to set a new one,
+            clearTimeout(DebounceTimeoutId.current);
+
+            if (searchTerm) {
+
+                // once use start typing, clear the list. 
+                if (searchResults?.length) {
+                    setSearchResults([]);
+                }
+
+                // once use start typing, show the spinner,
+                if (!isLoading) {
+                    setIsLoading(true);
+                }
+
+                // set a new timed out function.
                 DebounceTimeoutId.current = setTimeout(() => {
-                    textInputRef.current.blur();
                     getWeatherDataFromApi({
                         cityName: searchTerm,
                         onSuccess: (data) => {
@@ -49,20 +59,11 @@ const SearchModal = ({ setModalVisible, setCites }) => {
 
     return (
         <>
-
-            <TouchableOpacity
-                onPress={() => { setModalVisible(false) }}
-                activeOpacity={1}
-                style={styles.tranparentTabableArea}
-            >
-            </TouchableOpacity>
-
+            <TranparentTabableArea setModalVisible={setModalVisible} />
             <View style={styles.modal}>
-
                 <View style={styles.textInputContainer}>
                     <Image style={styles.serachIcon} source={require("../../assets/images/search.png")} />
                     <TextInput
-                        ref={textInputRef}
                         style={styles.input}
                         onChangeText={setSearchTerm}
                         value={searchTerm}
@@ -71,9 +72,7 @@ const SearchModal = ({ setModalVisible, setCites }) => {
                         returnKeyType="search"
                     />
                 </View>
-
                 {isLoading && <ActivityIndicator style={styles.spinner} size="large" color={colors.blue} />}
-
                 {searchResults ?
                     <FlatList
                         style={styles.searchResultsList}
@@ -84,13 +83,22 @@ const SearchModal = ({ setModalVisible, setCites }) => {
                     :
                     <Text style={styles.noResultText}>city not found</Text>
                 }
-
             </View>
-
         </>
     )
 };
 export default SearchModal;
+
+const TranparentTabableArea = memo(({ setModalVisible }) => {
+    return (
+        <TouchableOpacity
+            onPress={() => { setModalVisible(false) }}
+            activeOpacity={1}
+            style={styles.tranparentTabableArea}
+        >
+        </TouchableOpacity>
+    )
+})
 
 const styles = StyleSheet.create({
     tranparentTabableArea: {
@@ -109,21 +117,17 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: colors.grey,
         paddingHorizontal: 24,
-        // borderWidth: 1
-
     },
     serachIcon: {
         width: 32,
         height: 32,
         marginRight: 16,
-        // borderWidth: 1
     },
     input: {
         flex: 1,
         height: 75,
         fontSize: font.sizes.medium,
         fontFamily: font.families.LatoBold,
-        // borderWidth: 1
     },
     searchResultsList: {
         paddingVertical: 8

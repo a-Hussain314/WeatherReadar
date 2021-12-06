@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "stretch",
-        // borderWidth: 1
     },
     cityDataWrapper: {
         flex: 1,
