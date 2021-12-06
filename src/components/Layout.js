@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     customHeader: {
-        height: Dimensions.get('window').height * 0.2,
+        height: Dimensions.get('window').height * 0.15,
         backgroundColor: colors.blue,
         justifyContent: "flex-end",
     },
@@ -40,10 +40,11 @@ const styles = StyleSheet.create({
         fontFamily: font.families.LatoRegular,
         color: colors.light,
         paddingLeft: 72,
-        marginVertical: 22
+        marginBottom: 22
     },
     childrenContainer: {
         flex: 1,
+        backgroundColor: "#e9e7ed"
     }
 
 })

@@ -1,14 +1,29 @@
-import React from 'react';
-import { View, Text } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList } from "react-native";
+import CityRecordsListItem from '../components/CityRecordsListItem';
 import Layout from '../components/Layout';
 import font from '../styles/font';
+import { getCityRecords } from '../utils/localStorage';
 
 const CityHistoryScreen = ({ route }) => {
-  const city = route.params;
-  // console.log(route.params)
+  const [cityRecords, setCityRecords] = useState([]);
+  const { cityNameWithCountryIso } = route.params;
+  const cityName = cityNameWithCountryIso.split(",")[0];
+
+  useEffect(() => {
+    getCityRecords(cityNameWithCountryIso, (records) => {
+      console.log("CityHistoryScreen", records);
+      setCityRecords(records);
+    })
+  }, [])
+
   return (
-    <Layout title={`${city.name} Historical`}>
-      <Text style={{ fontSize: 32, fontFamily: font.families.LatoBold }}>{city.name} History Screen</Text>
+    <Layout title={`${cityName} Historical`}>
+      <FlatList
+        data={cityRecords}
+        renderItem={({ item }) => <CityRecordsListItem city={item} />}
+        keyExtractor={(item) => item.recordTime}
+      />
     </Layout>
   )
 }

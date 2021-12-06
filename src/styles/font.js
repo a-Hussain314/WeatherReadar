@@ -6,9 +6,9 @@ const font = {
         LatoBold: "Lato-Bold",
     },
     sizes: {
-        xlarge: 28,
-        large: 24,
-        medium: 18,
+        xlarge: 24,
+        large: 20,
+        medium: 16,
         small: 14
 
 

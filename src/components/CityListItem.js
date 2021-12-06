@@ -4,15 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import colors from '../styles/colors';
 import font from '../styles/font';
 
-const CityListItem = ({ city }) => {
+const CityListItem = ({ cityNameWithCountryIso }) => {
     const navigation = useNavigation();
-
     const navigateToDataScreen = () => {
-        navigation.navigate("CityDataScreen", { ...city })
+        navigation.navigate("CityDataScreen", {cityNameWithCountryIso})
     }
 
     const navigateToHistoryScreen = () => {
-        navigation.navigate("CityHistoryScreen", { ...city })
+        navigation.navigate("CityHistoryScreen", {cityNameWithCountryIso})
     }
 
     return (
@@ -20,11 +19,11 @@ const CityListItem = ({ city }) => {
             <TouchableOpacity onPress={navigateToDataScreen} style={[styles.button, styles.cityDataButton]}>
                 <View style={styles.cityDataButtonWrapper}>
                     <Image style={styles.cityDataButtonImage} source={require("../../assets/images/city.png")} />
-                    <Text style={{ color: colors.dark, fontSize: font.sizes.medium, fontFamily: font.families.LatoBold, fontWeight: "800" }}>{`${city?.name}, ${city.sys.country}`}</Text>
+                    <Text style={styles.cityDataButtonText}>{cityNameWithCountryIso}</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={navigateToHistoryScreen} style={[styles.button, styles.cityHistoryButton]}>
-                <Image style={{ width: 32, height: 32 }} source={require("../../assets/images/info.png")} />
+                <Image style={styles.cityHistoryIamge} source={require("../../assets/images/info.png")} />
             </TouchableOpacity>
 
         </View>
@@ -62,11 +61,17 @@ const styles = StyleSheet.create({
     cityDataButtonText: {
         color: colors.dark,
         fontSize: font.sizes.medium,
-        fontFamily: font.families.LatoBold
-    },
+        fontFamily: font.families.LatoBold,
+        fontWeight:"bold"
+    }
+    ,
     cityHistoryButton: {
         justifyContent: "center",
         alignItems: "center",
     },
+    cityHistoryIamge: {
+        width: 32,
+        height: 32
+    }
 })
 
