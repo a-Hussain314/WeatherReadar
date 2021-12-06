@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Image } from "re
 import Layout from '../components/Layout';
 import colors from '../styles/colors';
 import font from '../styles/font';
+import { formattedDatetime } from '../utils/formattedDatetime';
 import { addRecordToCity } from '../utils/localStorage';
 import { getWeatherDataFromApi } from '../utils/requester';
 
@@ -16,10 +17,10 @@ const CityDataScreen = ({ route }) => {
     getWeatherDataFromApi({
       cityName,
       onSuccess: (data) => {
-        console.log("city Data", data);
         setIsLoading(false)
         setCityData(data);
-        addRecordToCity(cityNameWithCountryIso, { ...data, recordTime: Date.now() })
+        // add the current time stamp to each data record
+        addRecordToCity(cityNameWithCountryIso, { ...data, recordDatetime: formattedDatetime() })
       },
       onFailure: () => {
         setIsLoading(false)
@@ -41,19 +42,19 @@ const CityDataScreen = ({ route }) => {
           <>
             <View style={styles.dataItem}>
               <Text style={styles.dataItemName}>Description</Text>
-              <Text style={styles.dataItemInfo}>{cityData.weather[0]?.description}</Text>
+              {cityData.weather[0]?.description && <Text style={styles.dataItemInfo}>{cityData.weather[0].description}</Text>}
             </View>
             <View style={styles.dataItem}>
               <Text style={styles.dataItemName}>Temperature</Text>
-              <Text style={styles.dataItemInfo}>{(cityData.main?.temp - 273.15).toFixed(1)}° C</Text>
+              {cityData.main?.temp && <Text style={styles.dataItemInfo}>{(cityData.main.temp - 273.15).toFixed(1)}° C</Text>}
             </View>
             <View style={styles.dataItem}>
               <Text style={styles.dataItemName}>Humidity</Text>
-              <Text style={styles.dataItemInfo}>{cityData.main?.humidity}%</Text>
+              {cityData.main?.humidity && <Text style={styles.dataItemInfo}>{cityData.main.humidity}%</Text>}
             </View>
             <View style={styles.dataItem}>
               <Text style={styles.dataItemName}>Windspeed</Text>
-              <Text style={styles.dataItemInfo}>{cityData.wind?.speed} Km/h</Text>
+              {cityData.wind?.speed && <Text style={styles.dataItemInfo}>{cityData.wind.speed} Km/h</Text>}
             </View>
           </>
 

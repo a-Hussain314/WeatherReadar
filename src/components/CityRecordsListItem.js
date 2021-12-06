@@ -10,7 +10,7 @@ const CityRecordsListItem = ({ city }) => {
         <View style={styles.CityRecordsListItem}>
             <Image resizeMode={"stretch"} source={{ uri: `https://openweathermap.org/img/w/${city.weather[0]?.icon}.png` }} style={styles.recordIcon} />
             <View style={styles.recordInfo}>
-                <Text style={styles.recordTime}>{new Date(city.recordTime).toLocaleString()}</Text>
+                <Text style={styles.recordTime}>{`${city.recordDatetime.date} - ${city.recordDatetime.time}`}</Text>
                 <Text style={styles.recordWeather}>{city?.weather[0]?.description}, {(city.main?.temp - 273.15).toFixed(1)}° C</Text>
             </View>
         </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginRight: 24,
         // backgroundColor:"green"
     },
-    recordInfo:{
+    recordInfo: {
 
     },
     recordTime: {
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         fontSize: font.sizes.medium,
         fontFamily: font.families.LatoBold,
         fontWeight: "bold",
-        textTransform:"capitalize"
+        textTransform: "capitalize"
     }
 
 })

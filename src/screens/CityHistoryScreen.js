@@ -12,7 +12,6 @@ const CityHistoryScreen = ({ route }) => {
 
   useEffect(() => {
     getCityRecords(cityNameWithCountryIso, (records) => {
-      console.log("CityHistoryScreen", records);
       setCityRecords(records);
     })
   }, [])
@@ -22,7 +21,7 @@ const CityHistoryScreen = ({ route }) => {
       <FlatList
         data={cityRecords}
         renderItem={({ item }) => <CityRecordsListItem city={item} />}
-        keyExtractor={(item) => item.recordTime}
+        keyExtractor={(item) => item.recordDatetime.timestamp}
       />
     </Layout>
   )

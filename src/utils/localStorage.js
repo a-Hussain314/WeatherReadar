@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const getCities = async (callback = () => { }) => {
     try {
         const value = await AsyncStorage.getItem("cities");
-        console.log("AsyncStorage : cities fetched successfully", Object.keys(JSON.parse(value)));
         // turn the object values into array
         callback(Object.keys(JSON.parse(value)));
 
@@ -16,19 +15,16 @@ export const getCities = async (callback = () => { }) => {
 export const addCity = async (cityName = "", callback = () => { }) => {
     try {
         const citeis = await AsyncStorage.getItem("cities");
-        // console.log("add City(0)", citeis)
         if (citeis) {
             const parsedCities = JSON.parse(citeis);
             if (!parsedCities[cityName]) {
                 parsedCities[cityName] = [];
                 await AsyncStorage.setItem("cities", JSON.stringify(parsedCities));
-                // console.log("add City(1)", Object.keys(parsedCities))
                 callback(Object.keys(parsedCities));
             }
         }
         else {
             const newCities = { [cityName]: [] };
-            // console.log("add City(2)", Object.keys(newCities));
             callback(Object.keys(newCities));
             await AsyncStorage.setItem("cities", JSON.stringify(newCities));
         }
@@ -61,7 +57,6 @@ export const addRecordToCity = async (cityName = "", record = {}) => {
         if (citeis) {
             const parsedCities = JSON.parse(citeis);
             if (parsedCities[cityName]) {
-                console.log("addRecordToCity", { cityName, record })
                 parsedCities[cityName] = [...parsedCities[cityName], record];
                 await AsyncStorage.setItem("cities", JSON.stringify(parsedCities));
             }
@@ -78,7 +73,6 @@ export const getCityRecords = async (cityName = "", callback = () => { }) => {
         if (citeis) {
             const parsedCities = JSON.parse(citeis);
             if (parsedCities[cityName]) {
-                console.log("getCityRecords", parsedCities[cityName])
                 callback(parsedCities[cityName])
             }
         }
