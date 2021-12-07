@@ -10,29 +10,36 @@ import { getWeatherDataFromApi } from '../utils/requester';
 const CityDataScreen = ({ route }) => {
   const [cityData, setCityData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { cityNameWithCountryIso } = route.params;
-  const cityName = cityNameWithCountryIso.split(",")[0];
 
   useEffect(() => {
-    getWeatherDataFromApi({
-      cityName,
-      onSuccess: (data) => {
-        setIsLoading(false)
-        setCityData(data);
-        // add the current time stamp to each data record
-        addRecordToCity(cityNameWithCountryIso, { ...data, recordDatetime: formattedDatetime() })
-      },
-      onFailure: () => {
-        setIsLoading(false)
-        setCityData(null);
-      }
-    })
+    // set cityData state with current or historical weather data
+    if (route.params.isHistoricalData) {
+      setIsLoading(false)
+      setCityData(route.params.city);
+    }
+    else {
+      const { cityNameWithCountryIso, } = route.params;
+      const cityName = cityNameWithCountryIso.split(",")[0];
+      getWeatherDataFromApi({
+        cityName,
+        onSuccess: (data) => {
+          setIsLoading(false)
+          setCityData(data);
+          // add the current time stamp to each data record
+          addRecordToCity(cityNameWithCountryIso, { ...data, recordDatetime: formattedDatetime() })
+        },
+        onFailure: () => {
+          setIsLoading(false)
+          setCityData(null);
+        }
+      })
+    }
   }, [])
 
   return (
     <Layout>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={styles.dataBox}>
-        <Text style={styles.title}>{cityNameWithCountryIso}</Text>
+        {cityData && <Text style={styles.title}>{`${cityData?.name}, ${cityData?.sys?.country}`}</Text>}
         {isLoading && <ActivityIndicator style={styles.spinner} size="large" color={colors.blue} />}
         {cityData && <Image resizeMode={"contain"} source={{ uri: `https://openweathermap.org/img/w/${cityData.weather[0]?.icon}.png` }} style={styles.icon} />}
         {cityData &&
@@ -56,6 +63,14 @@ const CityDataScreen = ({ route }) => {
           </>
         }
       </ScrollView>
+      {cityData && <>
+        <Text style={styles.recordTime}>Weather information for {cityData?.name} received on</Text>
+        {route.params.isHistoricalData ?
+          <Text style={styles.recordTime}>{`${cityData?.recordDatetime?.date} - ${cityData?.recordDatetime?.time}`}</Text>
+          :
+          <Text style={styles.recordTime}>{`${formattedDatetime().date} - ${formattedDatetime().time}`}</Text>
+        }
+      </>}
     </Layout>
   )
 }
@@ -111,5 +126,12 @@ const styles = StyleSheet.create({
   },
   spinner: {
     marginVertical: 10
+  },
+  recordTime: {
+    color: colors.darkgrey,
+    fontSize: font.sizes.small,
+    // fontFamily: font.families.LatoBold,
+    fontWeight: "bold",
+    textAlign: "center"
   },
 })

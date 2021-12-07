@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/core';
 import colors from '../styles/colors';
 import font from '../styles/font';
 import { addCity } from '../utils/localStorage';
 
 const CityRecordsListItem = ({ city }) => {
+    const navigation = useNavigation();
+    const navigateToDataScreen = () => {
+        navigation.navigate("CityDataScreen", { city, isHistoricalData: true })
+    }
 
     return (
-        <View style={styles.CityRecordsListItem}>
+        <TouchableOpacity onPress={navigateToDataScreen} style={styles.CityRecordsListItem}>
             <Image resizeMode={"stretch"} source={{ uri: `https://openweathermap.org/img/w/${city.weather[0]?.icon}.png` }} style={styles.recordIcon} />
             <View style={styles.recordInfo}>
                 <Text style={styles.recordTime}>{`${city.recordDatetime.date} - ${city.recordDatetime.time}`}</Text>
@@ -17,7 +22,7 @@ const CityRecordsListItem = ({ city }) => {
                     {city?.main?.temp && <Text >{(city.main.temp - 273.15).toFixed(1)}° C</Text>}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

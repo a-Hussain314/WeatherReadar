@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from "react-native";
+import { Text, FlatList, StyleSheet } from "react-native";
 import CityRecordsListItem from '../components/CityRecordsListItem';
 import Layout from '../components/Layout';
 import font from '../styles/font';
@@ -22,8 +22,18 @@ const CityHistoryScreen = ({ route }) => {
         data={cityRecords}
         renderItem={({ item }) => <CityRecordsListItem city={item} />}
         keyExtractor={(item) => item.recordDatetime.timestamp}
+        ListEmptyComponent={<Text style={styles.noCitiesText}>no historical weather data for {cityName} added yet</Text>}
       />
     </Layout>
   )
 }
+
+const styles = StyleSheet.create({
+  noCitiesText: {
+    fontSize: font.sizes.medium,
+    textAlign: "center",
+    marginVertical: 24
+  }
+});
+
 export default CityHistoryScreen;
