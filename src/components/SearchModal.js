@@ -15,16 +15,12 @@ const SearchModal = ({ setModalVisible, setCites }) => {
     // search for city once user stop writing (debouncing).
     useEffect(() => {
         if (DebounceTimeoutId) {
-
             // clear the old timeOut function, to set a new one,
             clearTimeout(DebounceTimeoutId.current);
 
             if (searchTerm) {
-
-                // once use start typing, clear the list. 
-                if (searchResults?.length) {
-                    setSearchResults([]);
-                }
+                // once user start typing, clear the list. 
+                setSearchResults([]);
 
                 // once use start typing, show the spinner,
                 if (!isLoading) {
@@ -89,6 +85,7 @@ const SearchModal = ({ setModalVisible, setCites }) => {
 };
 export default SearchModal;
 
+// separated and memoized to prevent unnecessary re-renders
 const TranparentTabableArea = memo(({ setModalVisible }) => {
     return (
         <TouchableOpacity

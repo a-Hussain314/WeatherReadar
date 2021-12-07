@@ -14,10 +14,12 @@ const CityDataScreen = ({ route }) => {
   useEffect(() => {
     // set cityData state with current or historical weather data
     if (route.params.isHistoricalData) {
+      // hisotical weather data
       setIsLoading(false)
       setCityData(route.params.city);
     }
     else {
+      // current weather data
       const { cityNameWithCountryIso, } = route.params;
       const cityName = cityNameWithCountryIso.split(",")[0];
       getWeatherDataFromApi({
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     width: "85%",
     alignSelf: "center",
     padding: 30,
+    borderRadius: 5,
     transform: [{ translateY: -50 }],
     backgroundColor: colors.light,
     shadowColor: colors.dark_transparent,
@@ -130,7 +133,6 @@ const styles = StyleSheet.create({
   recordTime: {
     color: colors.darkgrey,
     fontSize: font.sizes.small,
-    // fontFamily: font.families.LatoBold,
     fontWeight: "bold",
     textAlign: "center"
   },

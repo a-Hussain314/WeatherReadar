@@ -5,20 +5,21 @@ import font from '../styles/font';
 import { addCity } from '../utils/localStorage';
 
 const CitySearchListItem = ({ city, setCites, setModalVisible }) => {
+
     const add = () => {
         addCity(`${city?.name}, ${city.sys.country}`, setCites);
         setModalVisible(false);
     }
+
     return (
         <View style={styles.CitySearchListItem}>
             <View style={styles.cityDataWrapper}>
                 <Image style={styles.cityDataImage} source={require("../../assets/images/city.png")} />
                 <Text style={styles.cityDataText}>{`${city?.name}, ${city.sys.country}`}</Text>
             </View>
-            <TouchableOpacity onPress={add} style={[styles.button, styles.addCityButton]}>
+            <TouchableOpacity onPress={add} style={[styles.addCityButton]}>
                 <Text style={styles.addCityText}>Add City</Text>
             </TouchableOpacity>
-
         </View>
     )
 }

@@ -4,28 +4,35 @@ import { useNavigation } from '@react-navigation/native';
 import colors from '../styles/colors';
 import font from '../styles/font';
 
-const CityListItem = ({ cityNameWithCountryIso }) => {
+const CityListItem = ({ cityNameWithCountryIso, openDeleteCityModal }) => {
     const navigation = useNavigation();
+
     const navigateToDataScreen = () => {
-        navigation.navigate("CityDataScreen", {cityNameWithCountryIso})
+        navigation.navigate("CityDataScreen", { cityNameWithCountryIso })
     }
 
     const navigateToHistoryScreen = () => {
-        navigation.navigate("CityHistoryScreen", {cityNameWithCountryIso})
+        navigation.navigate("CityHistoryScreen", { cityNameWithCountryIso })
+    }
+
+    const remove = () => {
+        openDeleteCityModal(cityNameWithCountryIso)
     }
 
     return (
         <View style={styles.cityListItem}>
-            <TouchableOpacity onPress={navigateToDataScreen} style={[styles.button, styles.cityDataButton]}>
+            <TouchableOpacity onPress={navigateToDataScreen} style={[styles.cityDataButton]}>
                 <View style={styles.cityDataButtonWrapper}>
                     <Image style={styles.cityDataButtonImage} source={require("../../assets/images/city.png")} />
                     <Text style={styles.cityDataButtonText}>{cityNameWithCountryIso}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToHistoryScreen} style={[styles.button, styles.cityHistoryButton]}>
-                <Image style={styles.cityHistoryIamge} source={require("../../assets/images/info.png")} />
+            <TouchableOpacity onPress={remove} style={[styles.cityDeleteButton]}>
+                <Image style={styles.cityActionImage} source={require("../../assets/images/delete.png")} />
             </TouchableOpacity>
-
+            <TouchableOpacity onPress={navigateToHistoryScreen} style={[styles.cityHistoryButton]}>
+                <Image style={styles.cityActionImage} source={require("../../assets/images/info.png")} />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -38,12 +45,10 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "stretch",
     },
-    button: {
-        paddingVertical: 20,
-        paddingHorizontal: 24,
-    },
     cityDataButton: {
         flex: 1,
+        paddingVertical: 20,
+        paddingHorizontal: 24,
     },
     cityDataButtonWrapper: {
         flexDirection: "row",
@@ -59,14 +64,22 @@ const styles = StyleSheet.create({
         color: colors.dark,
         fontSize: font.sizes.medium,
         fontFamily: font.families.LatoBold,
-        fontWeight:"bold"
+        fontWeight: "bold"
     }
     ,
     cityHistoryButton: {
         justifyContent: "center",
         alignItems: "center",
+        paddingVertical: 20,
+        paddingRight: 24,
     },
-    cityHistoryIamge: {
+    cityDeleteButton: {
+        justifyContent: "center",
+        alignItems: "center",
+        paddingVertical: 20,
+        paddingHorizontal: 12,
+    },
+    cityActionImage: {
         width: 32,
         height: 32
     }

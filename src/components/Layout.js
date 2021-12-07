@@ -1,26 +1,23 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions } from "react-native";
-
 import colors from '../styles/colors';
 import font from '../styles/font';
 
 const Layout = ({ children, title = "" }) => {
     return (
         <View style={styles.layout}>
-            <>
-                <View style={styles.customHeader}>
-                    <Text style={styles.customHeaderText}>{title}</Text>
-                </View>
-                <View style={styles.childrenContainer}>
-                    <ImageBackground
-                        style={{ flex: 1 }}
-                        source={require("../../assets/images/backgroundCurves.png")}
-                        resizeMode="cover"
-                    >
-                        {children}
-                    </ImageBackground>
-                </View>
-            </>
+            <View style={styles.customHeader}>
+                <Text style={styles.customHeaderText}>{title}</Text>
+            </View>
+            <View style={styles.childrenContainer}>
+                <ImageBackground
+                    style={styles.imageBackground}
+                    source={require("../../assets/images/backgroundCurves.png")}
+                    resizeMode="cover"
+                >
+                    {children}
+                </ImageBackground>
+            </View>
         </View >
     )
 }
@@ -45,6 +42,8 @@ const styles = StyleSheet.create({
     childrenContainer: {
         flex: 1,
         backgroundColor: "#e9e7ed"
+    },
+    imageBackground: {
+        flex: 1
     }
-
 })

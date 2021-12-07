@@ -3,10 +3,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/core';
 import colors from '../styles/colors';
 import font from '../styles/font';
-import { addCity } from '../utils/localStorage';
 
 const CityRecordsListItem = ({ city }) => {
     const navigation = useNavigation();
+
     const navigateToDataScreen = () => {
         navigation.navigate("CityDataScreen", { city, isHistoricalData: true })
     }
@@ -41,15 +41,10 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         marginRight: 24,
-        // backgroundColor:"green"
-    },
-    recordInfo: {
-
     },
     recordTime: {
         color: colors.darkgrey,
         fontSize: font.sizes.small,
-        // fontFamily: font.families.LatoBold,
         fontWeight: "bold",
     },
     recordWeather: {
@@ -59,6 +54,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textTransform: "capitalize"
     }
-
 })
 

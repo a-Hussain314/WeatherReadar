@@ -15,7 +15,8 @@ export const getWeatherDataFromApi = async (data = {
         else {
             data.onFailure()
         }
-    } catch (error) {
+    }
+    catch (error) {
         data.onFailure()
     }
 }

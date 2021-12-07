@@ -11,9 +11,7 @@ const CityHistoryScreen = ({ route }) => {
   const cityName = cityNameWithCountryIso.split(",")[0];
 
   useEffect(() => {
-    getCityRecords(cityNameWithCountryIso, (records) => {
-      setCityRecords(records);
-    })
+    getCityRecords(cityNameWithCountryIso, records=> setCityRecords(records))
   }, [])
 
   return (
@@ -22,7 +20,7 @@ const CityHistoryScreen = ({ route }) => {
         data={cityRecords}
         renderItem={({ item }) => <CityRecordsListItem city={item} />}
         keyExtractor={(item) => item.recordDatetime.timestamp}
-        ListEmptyComponent={<Text style={styles.noCitiesText}>no historical weather data for {cityName} added yet</Text>}
+        ListEmptyComponent={<Text style={styles.noCitiesText}>no historical weather data for {cityNameWithCountryIso}</Text>}
       />
     </Layout>
   )
