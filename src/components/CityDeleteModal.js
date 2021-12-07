@@ -7,7 +7,7 @@ const CityDeleteModal = ({ citySelectedToDelete, onDeleteModalConfirm, onDeleteM
     return (
         <View style={styles.deleteModalContainer}>
             <View style={styles.deleteModal}>
-                <Text style={styles.deleteCityText}>Are You sure you want to delete {citySelectedToDelete.current} ? </Text>
+                <Text style={styles.deleteCityText}>Are you sure you want to delete {citySelectedToDelete.current} ? </Text>
                 <View style={styles.deleteActionConatiner}>
                     <TouchableOpacity onPress={onDeleteModalCancel}>
                         <Text style={styles.cancelText}>Cancel</Text>
@@ -49,11 +49,12 @@ const styles = StyleSheet.create({
         fontSize: font.sizes.small,
         fontFamily: font.families.LatoBold,
         color: colors.danger,
+        margin:10,
     },
     cancelText: {
         fontSize: font.sizes.small,
         fontFamily: font.families.LatoBold,
         color: colors.darkgrey,
-        marginRight: 20
+        margin: 10
     }
 });
